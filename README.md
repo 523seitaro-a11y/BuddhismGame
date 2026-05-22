@@ -2,6 +2,10 @@
 
 スマホで遊べる、初詣の作法の順番を学ぶドラッグ式ミニゲームです。
 
+## 遊ぶURL
+
+[https://523seitaro-a11y.github.io/BuddhismGame/](https://523seitaro-a11y.github.io/BuddhismGame/)
+
 ## 遊び方
 
 1. 画面下の作法パネルを選びます。
@@ -12,11 +16,3 @@
 ## 正しい流れ
 
 一礼、お賽銭、鈴、二礼、二拍手、祈る、一礼。
-
-## 公開URL
-
-GitHub Pages:
-
-```text
-https://523seitaro-a11y.github.io/BuddhismGame/
-```
