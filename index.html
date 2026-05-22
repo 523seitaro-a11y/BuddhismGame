@@ -3,51 +3,55 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>BuddhismGame</title>
+    <title>初詣作法ならべ</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main class="app" aria-live="polite">
-      <section class="topbar">
+      <header class="topbar">
         <div>
-          <p class="eyebrow">BuddhismGame</p>
-          <h1>仏教体験ミニゲーム</h1>
+          <p class="eyebrow">Hatsumode Practice</p>
+          <h1>初詣作法ならべ</h1>
         </div>
-        <button class="icon-button" id="shareButton" type="button" aria-label="共有">
-          <span aria-hidden="true">↗</span>
+        <button class="icon-button" id="resetButton" type="button" aria-label="リセット">
+          <span aria-hidden="true">↺</span>
         </button>
+      </header>
+
+      <section class="shrine-scene" aria-label="参拝シーン">
+        <div class="person" aria-label="横を向いた人" role="img">
+          <span class="head"></span>
+          <span class="body"></span>
+          <span class="arm"></span>
+          <span class="leg leg-back"></span>
+          <span class="leg leg-front"></span>
+        </div>
+        <div class="coin" id="coin" aria-hidden="true"></div>
+        <div class="offering-box" aria-label="お賽銭箱" role="img">
+          <span class="roof"></span>
+          <span class="slats"></span>
+          <span class="label">奉納</span>
+        </div>
       </section>
 
-      <section class="progress" aria-label="進行状況">
-        <div class="progress-track">
+      <section class="status-panel">
+        <p id="message">下のパネルを、初詣の作法の順番に中央の枠へ入れよう。</p>
+        <div class="meter" aria-label="進行状況">
           <span id="progressBar"></span>
         </div>
-        <p><span id="stageNumber">1</span>/4</p>
       </section>
 
-      <section class="scene" id="scene">
-        <div class="scene-art" id="sceneArt" aria-hidden="true">
-          <span></span>
-        </div>
-        <div class="scene-copy">
-          <p class="lesson" id="lessonLabel">呼吸を観る</p>
-          <h2 id="stageTitle">一息だけ、静かに座る</h2>
-          <p id="stageText">
-            目の前のことを急いで変えようとせず、まず息が入って出ていくことに気づいてみます。
-          </p>
-        </div>
+      <section class="slots" id="slots" aria-label="作法を入れる枠"></section>
+
+      <section class="tray" aria-label="作法パネル">
+        <div class="tray-title">パネル</div>
+        <div class="panel-grid" id="panelGrid"></div>
       </section>
 
-      <section class="choices" id="choices" aria-label="選択肢"></section>
-
-      <section class="insight" id="insight" hidden>
-        <p id="insightText"></p>
-        <button id="nextButton" type="button">次へ</button>
-      </section>
-
-      <section class="collection" aria-label="集めた学び">
-        <p>集めた学び</p>
-        <ul id="badgeList"></ul>
+      <section class="result" id="result" hidden>
+        <h2>参拝完了</h2>
+        <p>順番通りに並べられました。静かに心を整えて、新しい一年を始めましょう。</p>
+        <button id="playAgainButton" type="button">もう一度</button>
       </section>
     </main>
 
