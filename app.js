@@ -1,16 +1,12 @@
 const correctOrder = [
-  { id: "bow1", label: "一礼", detail: "鳥居や参道の前で軽く礼" },
   { id: "coin", label: "お賽銭", detail: "気持ちを込めて納める" },
-  { id: "bell", label: "鈴", detail: "鈴があれば鳴らす" },
-  { id: "bow2", label: "二礼", detail: "深く二回礼" },
-  { id: "clap", label: "二拍手", detail: "手を二回打つ" },
-  { id: "pray", label: "祈る", detail: "手を合わせて願う" },
-  { id: "bow3", label: "一礼", detail: "最後にもう一度礼" },
+  { id: "bell", label: "鈴を鳴らす", detail: "鈴があれば静かに鳴らす" },
+  { id: "gassho", label: "合掌", detail: "手を合わせて祈願" },
+  { id: "bow", label: "礼", detail: "最後に丁寧に礼" },
 ];
 
 const extraPanels = [
-  { id: "photo", label: "写真", detail: "参拝の途中ではない" },
-  { id: "run", label: "走る", detail: "参道では落ち着いて歩く" },
+  { id: "clap", label: "拍手", detail: "お寺では使わない" },
 ];
 
 const slots = document.querySelector("#slots");
@@ -113,7 +109,7 @@ function makeSlot(index) {
   slot.className = "slot";
   slot.type = "button";
   slot.dataset.index = String(index);
-  slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">ここに入れる</span>`;
+  slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">空き</span>`;
   slot.addEventListener("dragover", (event) => event.preventDefault());
   slot.addEventListener("drop", (event) => {
     event.preventDefault();
@@ -135,7 +131,7 @@ function render() {
   placed = Array(correctOrder.length).fill(null);
   selectedPanelId = null;
   result.hidden = true;
-  message.textContent = "下のパネルを、初詣の作法の順番に中央の枠へ入れよう。タップでも操作できます。";
+  message.textContent = "お寺の初詣です。左から右へ、正しい順番に入れよう。";
   updateProgress();
 }
 
@@ -157,7 +153,9 @@ function tryPlace(id, index) {
 
   if (id !== expected.id) {
     slot.classList.add("shake");
-    message.textContent = `その枠は「${expected.label}」の順番です。もう一度考えてみよう。`;
+    message.textContent = id === "clap"
+      ? "お寺では拍手ではなく、静かに合掌します。"
+      : `その枠は「${expected.label}」の順番です。`;
     setTimeout(() => slot.classList.remove("shake"), 420);
     return;
   }
@@ -186,7 +184,7 @@ function updateProgress() {
 
 function checkClear() {
   if (placed.every(Boolean)) {
-    message.textContent = "クリア。初詣の基本の流れを並べられました。";
+    message.textContent = "クリア。お寺の初詣の基本の流れを並べられました。";
     result.hidden = false;
   }
 }

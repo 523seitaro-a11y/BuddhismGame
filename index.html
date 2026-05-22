@@ -3,22 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>初詣作法ならべ</title>
+    <title>お寺の初詣作法ならべ</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main class="app" aria-live="polite">
       <header class="topbar">
         <div>
-          <p class="eyebrow">Hatsumode Practice</p>
-          <h1>初詣作法ならべ</h1>
+          <p class="eyebrow">Temple Hatsumode</p>
+          <h1>お寺の初詣</h1>
         </div>
         <button class="icon-button" id="resetButton" type="button" aria-label="リセット">
           <span aria-hidden="true">↺</span>
         </button>
       </header>
 
-      <section class="shrine-scene" aria-label="参拝シーン">
+      <section class="temple-scene" aria-label="お寺の参拝シーン">
+        <div class="temple-sign">お寺の本堂</div>
         <div class="person" aria-label="横を向いた人" role="img">
           <span class="head"></span>
           <span class="body"></span>
@@ -27,7 +28,10 @@
           <span class="leg leg-front"></span>
         </div>
         <div class="coin" id="coin" aria-hidden="true"></div>
-        <div class="offering-box" aria-label="お賽銭箱" role="img">
+        <div class="temple-gate" aria-hidden="true">
+          <span></span>
+        </div>
+        <div class="offering-box" aria-label="お寺のお賽銭箱" role="img">
           <span class="roof"></span>
           <span class="slats"></span>
           <span class="label">奉納</span>
@@ -35,7 +39,7 @@
       </section>
 
       <section class="status-panel">
-        <p id="message">下のパネルを、初詣の作法の順番に中央の枠へ入れよう。</p>
+        <p id="message">お寺の初詣の作法を、左から右へ順番に入れよう。</p>
         <div class="meter" aria-label="進行状況">
           <span id="progressBar"></span>
         </div>
@@ -50,7 +54,7 @@
 
       <section class="result" id="result" hidden>
         <h2>参拝完了</h2>
-        <p>順番通りに並べられました。静かに心を整えて、新しい一年を始めましょう。</p>
+        <p>お寺の初詣の流れを並べられました。手を合わせ、静かに新しい一年を始めましょう。</p>
         <button id="playAgainButton" type="button">もう一度</button>
       </section>
     </main>
