@@ -128,6 +128,7 @@ header h1 {
   display: block;
   width: 100%;
   height: auto;
+  border: 4px solid transparent;
   filter: drop-shadow(0 5px 0 var(--ink));
 }
 
@@ -137,7 +138,8 @@ header h1 {
 }
 
 .choice.selected img {
-  filter: drop-shadow(0 9px 0 var(--blue));
+  border-color: var(--blue);
+  filter: drop-shadow(0 5px 0 var(--ink));
 }
 
 .choice:disabled:not(.selected) {
