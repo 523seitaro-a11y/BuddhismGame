@@ -37,10 +37,65 @@ button {
   height: 100svh;
   margin: 0 auto;
   padding: 10px 10px 12px;
-  display: grid;
-  grid-template-rows: auto 118px auto auto auto auto;
-  gap: 8px;
   overflow: hidden;
+}
+
+.game-screen {
+  display: grid;
+  grid-template-rows: auto 118px auto auto auto auto auto;
+  gap: 8px;
+  height: 100%;
+}
+
+.game-screen[hidden],
+.title-menu[hidden] {
+  display: none;
+}
+
+.title-menu {
+  min-height: calc(100svh - 22px);
+  display: grid;
+  align-content: center;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255, 253, 248, 0.94), rgba(255, 253, 248, 0.72)),
+    linear-gradient(135deg, rgba(182, 64, 54, 0.14), rgba(47, 111, 88, 0.16));
+}
+
+.title-menu h1 {
+  max-width: 12em;
+  font-size: clamp(2rem, 12vw, 4.2rem);
+}
+
+.title-menu p:not(.eyebrow) {
+  max-width: 28rem;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.start-button,
+.decide-button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--red);
+  color: var(--white);
+  font-weight: 900;
+}
+
+.start-button {
+  width: min(100%, 260px);
+  min-height: 54px;
+  font-size: 1.1rem;
+}
+
+.decide-button:disabled {
+  background: #c8bdad;
+  color: rgba(36, 31, 27, 0.62);
 }
 
 .topbar {
@@ -162,6 +217,78 @@ h1 {
   bottom: 18px;
   width: 105px;
   height: 112px;
+}
+
+.person.act-coin {
+  animation: leanForward 700ms ease;
+}
+
+.person.act-bell .arm {
+  animation: ringBell 700ms ease;
+}
+
+.person.act-gassho .arm {
+  width: 30px;
+  left: 68px;
+  transform-origin: left center;
+  animation: gasshoHands 760ms ease;
+}
+
+.person.act-bow {
+  animation: bowBody 760ms ease;
+  transform-origin: 70px 90px;
+}
+
+.person.act-clap .arm {
+  animation: clapHands 720ms ease;
+}
+
+@keyframes leanForward {
+  50% {
+    transform: translateX(12px) rotate(4deg);
+  }
+}
+
+@keyframes ringBell {
+  0%,
+  100% {
+    transform: rotate(4deg);
+  }
+  25% {
+    transform: rotate(-24deg) translateX(10px);
+  }
+  60% {
+    transform: rotate(18deg) translateX(8px);
+  }
+}
+
+@keyframes gasshoHands {
+  0%,
+  100% {
+    transform: rotate(4deg);
+  }
+  50% {
+    transform: rotate(-58deg) translate(10px, -6px);
+  }
+}
+
+@keyframes bowBody {
+  50% {
+    transform: rotate(18deg) translate(8px, 4px);
+  }
+}
+
+@keyframes clapHands {
+  0%,
+  100% {
+    transform: rotate(4deg);
+  }
+  35% {
+    transform: rotate(-34deg) translate(7px, -4px);
+  }
+  65% {
+    transform: rotate(12deg) translate(2px, 2px);
+  }
 }
 
 .person span {
@@ -379,6 +506,16 @@ h1 {
   color: var(--ink);
 }
 
+.slot.right {
+  border-color: rgba(47, 111, 88, 0.82);
+  background: rgba(47, 111, 88, 0.18);
+}
+
+.slot.wrong {
+  border-color: rgba(182, 64, 54, 0.72);
+  background: rgba(182, 64, 54, 0.12);
+}
+
 .slot.shake {
   animation: shake 360ms ease;
 }
@@ -500,7 +637,9 @@ h1 {
 .slot:focus-visible,
 .action-panel:focus-visible,
 .icon-button:focus-visible,
-#playAgainButton:focus-visible {
+#playAgainButton:focus-visible,
+.start-button:focus-visible,
+.decide-button:focus-visible {
   outline: 3px solid rgba(47, 111, 88, 0.34);
   outline-offset: 2px;
 }
@@ -508,6 +647,9 @@ h1 {
 @media (max-width: 520px) {
   .app {
     padding: 9px 8px 10px;
+  }
+
+  .game-screen {
     gap: 7px;
   }
 
@@ -546,7 +688,12 @@ h1 {
 
 @media (max-height: 640px) {
   .app {
-    grid-template-rows: auto 92px auto auto auto auto;
+    padding-top: 7px;
+  }
+
+  .game-screen {
+    grid-template-rows: auto 92px auto auto auto auto auto;
+    gap: 6px;
   }
 
   .temple-scene {
@@ -570,10 +717,14 @@ h1 {
   }
 
   .slot {
-    min-height: 48px;
+    min-height: 44px;
   }
 
   .action-panel {
-    min-height: 48px;
+    min-height: 46px;
+  }
+
+  .decide-button {
+    min-height: 38px;
   }
 }

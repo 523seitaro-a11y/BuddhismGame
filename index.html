@@ -8,6 +8,14 @@
   </head>
   <body>
     <main class="app" aria-live="polite">
+      <section class="title-menu" id="titleMenu">
+        <p class="eyebrow">Temple Hatsumode</p>
+        <h1>お寺の初詣作法ならべ</h1>
+        <p>パネルを左から右へ並べて、決定を押すと参拝の動きで答え合わせします。</p>
+        <button class="start-button" id="startButton" type="button">スタート</button>
+      </section>
+
+      <section class="game-screen" id="gameScreen" hidden>
       <header class="topbar">
         <div>
           <p class="eyebrow">Temple Hatsumode</p>
@@ -20,7 +28,7 @@
 
       <section class="temple-scene" aria-label="お寺の参拝シーン">
         <div class="temple-sign">お寺の本堂</div>
-        <div class="person" aria-label="横を向いた人" role="img">
+        <div class="person" id="person" aria-label="横を向いた人" role="img">
           <span class="head"></span>
           <span class="body"></span>
           <span class="arm"></span>
@@ -52,10 +60,14 @@
         <div class="panel-grid" id="panelGrid"></div>
       </section>
 
+      <button class="decide-button" id="decideButton" type="button" disabled>決定</button>
+
       <section class="result" id="result" hidden>
-        <h2>参拝完了</h2>
-        <p>お寺の初詣の流れを並べられました。手を合わせ、静かに新しい一年を始めましょう。</p>
+        <h2 id="resultTitle">答え合わせ</h2>
+        <p id="resultText"></p>
+        <p class="answer-line">正解: お賽銭 → 鈴を鳴らす → 合掌 → 礼</p>
         <button id="playAgainButton" type="button">もう一度</button>
+      </section>
       </section>
     </main>
 

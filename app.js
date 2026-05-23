@@ -9,18 +9,35 @@ const extraPanels = [
   { id: "clap", label: "拍手", detail: "お寺では使わない" },
 ];
 
+const allPanels = [...correctOrder, ...extraPanels];
+const actionMessages = {
+  coin: "お賽銭を納めます。",
+  bell: "鈴を鳴らします。",
+  gassho: "静かに合掌します。",
+  bow: "最後に礼をします。",
+  clap: "拍手しました。お寺では拍手ではなく合掌です。",
+};
+
+const titleMenu = document.querySelector("#titleMenu");
+const gameScreen = document.querySelector("#gameScreen");
+const startButton = document.querySelector("#startButton");
 const slots = document.querySelector("#slots");
 const panelGrid = document.querySelector("#panelGrid");
 const message = document.querySelector("#message");
 const progressBar = document.querySelector("#progressBar");
 const result = document.querySelector("#result");
+const resultTitle = document.querySelector("#resultTitle");
+const resultText = document.querySelector("#resultText");
 const resetButton = document.querySelector("#resetButton");
 const playAgainButton = document.querySelector("#playAgainButton");
+const decideButton = document.querySelector("#decideButton");
 const coin = document.querySelector("#coin");
+const person = document.querySelector("#person");
 
 let placed = [];
 let selectedPanelId = null;
 let suppressNextClick = false;
+let checking = false;
 
 function shuffle(items) {
   return [...items].sort(() => Math.random() - 0.5);
@@ -45,7 +62,7 @@ function makePanel(step) {
 }
 
 function beginPointerDrag(event, panel, id) {
-  if (panel.disabled) return;
+  if (panel.disabled || checking) return;
 
   event.preventDefault();
 
@@ -89,7 +106,7 @@ function beginPointerDrag(event, panel, id) {
 
     const dropTarget = document.elementFromPoint(endEvent.clientX, endEvent.clientY)?.closest(".slot");
     if (dropTarget) {
-      tryPlace(id, Number(dropTarget.dataset.index));
+      placePanel(id, Number(dropTarget.dataset.index));
     } else {
       selectPanel(id);
     }
@@ -115,13 +132,8 @@ function makeSlot(index) {
   slot.type = "button";
   slot.dataset.index = String(index);
   slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">空き</span>`;
-  slot.addEventListener("dragover", (event) => event.preventDefault());
-  slot.addEventListener("drop", (event) => {
-    event.preventDefault();
-    tryPlace(event.dataTransfer.getData("text/plain"), index);
-  });
   slot.addEventListener("click", () => {
-    if (selectedPanelId) tryPlace(selectedPanelId, index);
+    if (selectedPanelId) placePanel(selectedPanelId, index);
   });
   return slot;
 }
@@ -131,70 +143,135 @@ function render() {
   correctOrder.forEach((_, index) => slots.append(makeSlot(index)));
 
   panelGrid.innerHTML = "";
-  shuffle([...correctOrder, ...extraPanels]).forEach((step) => panelGrid.append(makePanel(step)));
+  shuffle(allPanels).forEach((step) => panelGrid.append(makePanel(step)));
 
   placed = Array(correctOrder.length).fill(null);
   selectedPanelId = null;
+  checking = false;
   result.hidden = true;
-  message.textContent = "お寺の初詣です。左から右へ、正しい順番に入れよう。";
+  decideButton.disabled = true;
+  decideButton.textContent = "決定";
+  message.textContent = "お寺の初詣です。パネルを左から右へ並べ、決定を押そう。";
+  clearAction();
   updateProgress();
 }
 
 function selectPanel(id) {
+  if (checking) return;
   selectedPanelId = id;
   document.querySelectorAll(".action-panel").forEach((panel) => {
     panel.classList.toggle("selected", panel.dataset.id === id);
   });
-  const step = [...correctOrder, ...extraPanels].find((item) => item.id === id);
+  const step = allPanels.find((item) => item.id === id);
   message.textContent = `「${step.label}」を選択中。入れたい枠をタップしてください。`;
 }
 
-function tryPlace(id, index) {
-  const expected = correctOrder[index];
+function placePanel(id, index) {
+  if (checking) return;
   const panel = document.querySelector(`.action-panel[data-id="${id}"]`);
   const slot = document.querySelector(`.slot[data-index="${index}"]`);
+  const step = allPanels.find((item) => item.id === id);
 
-  if (!panel || !slot || placed[index]) return;
+  if (!panel || !slot || !step) return;
 
-  if (id !== expected.id) {
-    slot.classList.add("shake");
-    message.textContent = id === "clap"
-      ? "お寺では拍手ではなく、静かに合掌します。"
-      : `その枠は「${expected.label}」の順番です。`;
-    setTimeout(() => slot.classList.remove("shake"), 420);
-    return;
+  const previous = placed[index];
+  if (previous) {
+    document.querySelector(`.action-panel[data-id="${previous}"]`).disabled = false;
+  }
+
+  const oldIndex = placed.indexOf(id);
+  if (oldIndex >= 0) {
+    placed[oldIndex] = null;
+    resetSlot(oldIndex);
   }
 
   placed[index] = id;
   slot.classList.add("filled");
-  slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">${expected.label}</span>`;
+  slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">${step.label}</span>`;
   panel.disabled = true;
   panel.classList.remove("selected");
   selectedPanelId = null;
-  message.textContent = `${expected.label}、正解です。次の作法を入れましょう。`;
-
-  if (id === "coin") {
-    coin.classList.remove("animate");
-    window.requestAnimationFrame(() => coin.classList.add("animate"));
-  }
-
+  message.textContent = `${step.label}を${index + 1}番に入れました。全部入れたら決定を押してください。`;
   updateProgress();
-  checkClear();
+}
+
+function resetSlot(index) {
+  const slot = document.querySelector(`.slot[data-index="${index}"]`);
+  slot.classList.remove("filled", "right", "wrong");
+  slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">空き</span>`;
 }
 
 function updateProgress() {
   const count = placed.filter(Boolean).length;
   progressBar.style.width = `${(count / correctOrder.length) * 100}%`;
+  decideButton.disabled = count !== correctOrder.length || checking;
 }
 
-function checkClear() {
-  if (placed.every(Boolean)) {
-    message.textContent = "クリア。お寺の初詣の基本の流れを並べられました。";
-    result.hidden = false;
+async function decide() {
+  if (decideButton.disabled) return;
+  checking = true;
+  decideButton.disabled = true;
+  result.hidden = true;
+  document.querySelectorAll(".action-panel, .slot").forEach((button) => {
+    button.disabled = true;
+  });
+
+  for (const id of placed) {
+    await playAction(id);
   }
+
+  showAnswer();
+  checking = false;
+  decideButton.textContent = "答え合わせ済み";
 }
 
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function playAction(id) {
+  clearAction();
+  const step = allPanels.find((item) => item.id === id);
+  message.textContent = actionMessages[id] || `${step.label}をします。`;
+  person.classList.add(`act-${id}`);
+  if (id === "coin") {
+    coin.classList.remove("animate");
+    window.requestAnimationFrame(() => coin.classList.add("animate"));
+  }
+  await wait(850);
+  clearAction();
+  await wait(120);
+}
+
+function clearAction() {
+  person.className = "person";
+  coin.classList.remove("animate");
+}
+
+function showAnswer() {
+  const isCorrect = placed.every((id, index) => id === correctOrder[index].id);
+  placed.forEach((id, index) => {
+    const slot = document.querySelector(`.slot[data-index="${index}"]`);
+    slot.classList.add(id === correctOrder[index].id ? "right" : "wrong");
+  });
+
+  resultTitle.textContent = isCorrect ? "正解です" : "答え合わせ";
+  resultText.textContent = isCorrect
+    ? "お寺の初詣の流れを正しく並べられました。"
+    : "正しい順番を確認しましょう。お寺では拍手ではなく、合掌して祈願します。";
+  message.textContent = isCorrect
+    ? "参拝完了。静かに新しい一年を始めましょう。"
+    : "正解は、お賽銭 → 鈴を鳴らす → 合掌 → 礼 です。";
+  result.hidden = false;
+}
+
+function startGame() {
+  titleMenu.hidden = true;
+  gameScreen.hidden = false;
+  render();
+}
+
+startButton.addEventListener("click", startGame);
 resetButton.addEventListener("click", render);
 playAgainButton.addEventListener("click", render);
-
-render();
+decideButton.addEventListener("click", decide);
