@@ -112,6 +112,7 @@ header h1 {
   width: min(100%, 353px);
   aspect-ratio: 353 / 378;
   position: relative;
+  background: var(--white);
   touch-action: none;
 }
 
