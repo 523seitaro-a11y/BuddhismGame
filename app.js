@@ -38,7 +38,6 @@ let placed = [];
 let selectedPanelId = null;
 let suppressNextClick = false;
 let checking = false;
-let activeDropSlot = null;
 
 function shuffle(items) {
   return [...items].sort(() => Math.random() - 0.5);
@@ -51,7 +50,6 @@ function makePanel(step) {
   button.draggable = false;
   button.dataset.id = step.id;
   button.innerHTML = `<span>${step.label}</span><small>${step.detail}</small>`;
-  button.addEventListener("pointerdown", (event) => beginPointerDrag(event, button, step.id));
   button.addEventListener("click", () => {
     if (suppressNextClick) {
       suppressNextClick = false;
@@ -60,95 +58,6 @@ function makePanel(step) {
     selectPanel(step.id);
   });
   return button;
-}
-
-function beginPointerDrag(event, panel, id) {
-  if (panel.disabled || checking) return;
-
-  event.preventDefault();
-
-  const startX = event.clientX;
-  const startY = event.clientY;
-  let dragging = false;
-
-  selectedPanelId = id;
-  panel.classList.add("pressed");
-  panel.setPointerCapture(event.pointerId);
-
-  function move(moveEvent) {
-    const dx = moveEvent.clientX - startX;
-    const dy = moveEvent.clientY - startY;
-    if (!dragging && Math.hypot(dx, dy) > 8) {
-      dragging = true;
-      panel.classList.add("dragging");
-    }
-    if (dragging) {
-      moveEvent.preventDefault();
-      panel.style.transform = `translate(${dx}px, ${dy}px) scale(1.03)`;
-      updateDropTarget(moveEvent.clientX, moveEvent.clientY);
-    }
-  }
-
-  function end(endEvent) {
-    panel.releasePointerCapture(event.pointerId);
-    panel.removeEventListener("pointermove", move);
-    panel.removeEventListener("pointerup", end);
-    panel.removeEventListener("pointercancel", cancel);
-
-    panel.classList.remove("pressed");
-
-    if (!dragging) {
-      selectPanel(id);
-      return;
-    }
-
-    suppressNextClick = true;
-    panel.classList.remove("dragging");
-    panel.style.transform = "";
-
-    const dropTarget = getDropSlot(endEvent.clientX, endEvent.clientY);
-    clearDropTarget();
-    if (dropTarget) {
-      placePanel(id, Number(dropTarget.dataset.index));
-    } else {
-      selectPanel(id);
-    }
-  }
-
-  function cancel() {
-    panel.classList.remove("pressed");
-    panel.classList.remove("dragging");
-    panel.style.transform = "";
-    clearDropTarget();
-    panel.removeEventListener("pointermove", move);
-    panel.removeEventListener("pointerup", end);
-    panel.removeEventListener("pointercancel", cancel);
-  }
-
-  panel.addEventListener("pointermove", move);
-  panel.addEventListener("pointerup", end);
-  panel.addEventListener("pointercancel", cancel);
-}
-
-function getDropSlot(x, y) {
-  return document.elementFromPoint(x, y)?.closest(".slot:not(.filled)");
-}
-
-function updateDropTarget(x, y) {
-  const nextSlot = getDropSlot(x, y);
-  if (nextSlot === activeDropSlot) return;
-  clearDropTarget();
-  activeDropSlot = nextSlot;
-  if (activeDropSlot) {
-    activeDropSlot.classList.add("drop-ready");
-  }
-}
-
-function clearDropTarget() {
-  if (activeDropSlot) {
-    activeDropSlot.classList.remove("drop-ready");
-    activeDropSlot = null;
-  }
 }
 
 function makeSlot(index) {
@@ -222,7 +131,7 @@ function placePanel(id, index) {
 
 function resetSlot(index) {
   const slot = document.querySelector(`.slot[data-index="${index}"]`);
-  slot.classList.remove("filled", "right", "wrong", "drop-ready");
+  slot.classList.remove("filled", "right", "wrong");
   slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">空き</span>`;
 }
 

@@ -501,11 +501,6 @@ h1 {
   color: var(--ink);
 }
 
-.slot.drop-ready {
-  border-color: rgba(104, 66, 37, 0.72);
-  background: #e8dfd1;
-}
-
 .slot.right {
   border-color: rgba(47, 111, 88, 0.82);
   background: rgba(47, 111, 88, 0.18);
@@ -558,9 +553,8 @@ h1 {
   color: var(--ink);
   text-align: center;
   box-shadow: 0 4px 0 rgba(104, 66, 37, 0.12);
-  touch-action: none;
+  touch-action: manipulation;
   transition: box-shadow 120ms ease, background-color 120ms ease, border-color 120ms ease;
-  will-change: transform;
 }
 
 .action-panel span {
@@ -582,18 +576,6 @@ h1 {
   border-color: var(--red);
   background: #fff0ed;
   box-shadow: 0 0 0 3px rgba(182, 64, 54, 0.16);
-}
-
-.action-panel.pressed {
-  border-color: rgba(182, 64, 54, 0.6);
-  background: #fff7f3;
-}
-
-.action-panel.dragging {
-  position: relative;
-  z-index: 10;
-  pointer-events: none;
-  box-shadow: 0 16px 28px rgba(36, 31, 27, 0.22);
 }
 
 .action-panel:disabled {
