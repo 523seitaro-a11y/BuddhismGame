@@ -5,6 +5,11 @@
   --muted: #756a5d;
   --line: #d8cdbb;
   --red: #b64036;
+  --blue: #006dff;
+  --yellow: #ffd22e;
+  --bright-green: #11b85a;
+  --bright-red: #ff4b4b;
+  --orange: #ff8a00;
   --wood: #9d6536;
   --wood-dark: #684225;
   --green: #2f6f58;
@@ -85,6 +90,8 @@ button {
 .start-button {
   width: min(100%, 260px);
   min-height: 54px;
+  background: var(--orange);
+  color: #111111;
   font-size: 1.1rem;
 }
 
@@ -440,9 +447,9 @@ h1 {
   align-items: center;
   gap: 2px;
   padding: 6px;
-  border: 2px dashed #c9b89d;
-  background: rgba(255, 253, 248, 0.74);
-  color: var(--muted);
+  border: 2px dashed #111111;
+  background: #ffffff;
+  color: #111111;
   text-align: center;
 }
 
@@ -464,19 +471,21 @@ h1 {
 
 .slot.filled {
   border-style: solid;
-  border-color: rgba(47, 111, 88, 0.58);
-  background: rgba(47, 111, 88, 0.12);
-  color: var(--ink);
+  border-color: #111111;
+  background: var(--yellow);
+  color: #111111;
 }
 
 .slot.right {
-  border-color: rgba(47, 111, 88, 0.82);
-  background: rgba(47, 111, 88, 0.18);
+  border-color: #111111;
+  background: var(--bright-green);
+  color: #ffffff;
 }
 
 .slot.wrong {
-  border-color: rgba(182, 64, 54, 0.72);
-  background: rgba(182, 64, 54, 0.12);
+  border-color: #111111;
+  background: var(--bright-red);
+  color: #ffffff;
 }
 
 .slot.shake {
@@ -511,11 +520,11 @@ h1 {
 .action-panel {
   min-height: 62px;
   padding: 7px 5px;
-  border: 1px solid var(--line);
-  background: var(--white);
-  color: var(--ink);
+  border: 2px solid #111111;
+  background: #ffffff;
+  color: #111111;
   text-align: center;
-  box-shadow: 0 4px 0 rgba(104, 66, 37, 0.12);
+  box-shadow: 0 4px 0 #111111;
   touch-action: manipulation;
   transition: box-shadow 120ms ease, background-color 120ms ease, border-color 120ms ease;
 }
@@ -529,17 +538,22 @@ h1 {
 .action-panel small {
   display: block;
   margin-top: 4px;
-  color: var(--muted);
+  color: #4a4a4a;
   font-size: 0.62rem;
   font-weight: 700;
   line-height: 1.35;
 }
 
 .action-panel.selected {
-  border-color: #2f6fca;
-  background: #eef5ff;
+  border-color: #111111;
+  background: var(--blue);
+  color: #ffffff;
   transform: translateY(-5px);
-  box-shadow: 0 12px 18px rgba(47, 111, 202, 0.22), 0 0 0 3px rgba(47, 111, 202, 0.16);
+  box-shadow: 0 9px 0 #111111;
+}
+
+.action-panel.selected small {
+  color: #ffffff;
 }
 
 .action-panel:disabled {
@@ -551,9 +565,9 @@ h1 {
   display: grid;
   gap: 5px;
   padding: 10px;
-  border: 1px solid rgba(47, 111, 88, 0.38);
+  border: 2px solid #111111;
   border-radius: 8px;
-  background: rgba(255, 253, 248, 0.92);
+  background: var(--yellow);
 }
 
 .result[hidden] {
@@ -577,8 +591,8 @@ h1 {
 
 #playAgainButton {
   min-height: 38px;
-  border: 0;
-  background: var(--ink);
+  border: 2px solid #111111;
+  background: var(--blue);
   color: var(--white);
 }
 
@@ -588,7 +602,7 @@ h1 {
 #playAgainButton:focus-visible,
 .start-button:focus-visible,
 .decide-button:focus-visible {
-  outline: 3px solid rgba(47, 111, 88, 0.34);
+  outline: 3px solid var(--orange);
   outline-offset: 2px;
 }
 
