@@ -499,6 +499,7 @@ h1 {
 .tray {
   display: grid;
   gap: 5px;
+  margin-top: 14px;
 }
 
 .panel-grid {
