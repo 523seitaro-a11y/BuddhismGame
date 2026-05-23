@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>お焼香ゲーム</title>
+    <link rel="stylesheet" href="styles.css?v=20260523-games01">
+  </head>
+  <body>
+    <main class="game">
+      <section class="title" id="title">
+        <h1>お焼香ゲーム</h1>
+        <p>上から見た目線で、焼香を顔に寄せて戻す動きを三回しよう。</p>
+        <button id="startButton" type="button">スタート</button>
+      </section>
+
+      <section class="play" id="play" hidden>
+        <header>
+          <h1>お焼香を三回</h1>
+          <button id="resetButton" type="button" aria-label="リセット">↺</button>
+        </header>
+
+        <section class="top-view" aria-label="上から見たお焼香">
+          <div class="face">
+            <span class="eye left"></span>
+            <span class="eye right"></span>
+          </div>
+          <div class="hand" id="hand"></div>
+          <div class="incense-bowl"></div>
+        </section>
+
+        <button class="action-button" id="actionButton" type="button">焼香する</button>
+
+        <section class="counter" aria-label="回数">
+          <span id="count">0</span>/3
+        </section>
+
+        <section class="result" id="result" hidden>
+          <h2>完了</h2>
+          <p>三回のお焼香ができました。静かに心をこめて行います。</p>
+        </section>
+      </section>
+    </main>
+    <script src="app.js?v=20260523-games01"></script>
+  </body>
+</html>

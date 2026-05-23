@@ -3,67 +3,37 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>お寺の初詣作法ならべ</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" href="styles.css?v=20260523-06">
+    <title>仏教体験ミニゲーム集</title>
+    <link rel="stylesheet" href="styles.css?v=20260523-games01">
   </head>
   <body>
-    <main class="app" aria-live="polite">
-      <section class="title-menu" id="titleMenu">
-        <h1>お寺の初詣作法ならべ</h1>
-        <p>パネルを左から右へ並べて、決定を押すと参拝の動きで答え合わせします。</p>
-        <button class="start-button" id="startButton" type="button">スタート</button>
-      </section>
-
-      <section class="game-screen" id="gameScreen" hidden>
-      <header class="topbar">
-        <div>
-          <h1>お寺の初詣の手順を当てよう！</h1>
-        </div>
-        <button class="icon-button" id="resetButton" type="button" aria-label="リセット">
-          <span aria-hidden="true">↺</span>
-        </button>
+    <main class="home">
+      <header class="home-header">
+        <h1>仏教体験ミニゲーム集</h1>
+        <p>QRコードにしやすいように、ゲームごとに別URLで公開しています。</p>
       </header>
 
-      <section class="temple-scene" aria-label="お寺の参拝シーン">
-        <div class="temple-sign">お寺の本堂</div>
-        <div class="person" id="person" aria-label="横を向いた人" role="img">
-          <span class="head"></span>
-          <span class="body"></span>
-          <span class="arm"></span>
-          <span class="leg leg-back"></span>
-          <span class="leg leg-front"></span>
-        </div>
-        <div class="coin" id="coin" aria-hidden="true"></div>
-        <div class="temple-gate" aria-hidden="true">
-          <span></span>
-        </div>
-        <div class="offering-box" aria-label="お寺のお賽銭箱" role="img">
-          <span class="roof"></span>
-          <span class="slats"></span>
-          <span class="label">奉納</span>
-        </div>
+      <section class="game-list" aria-label="ゲーム一覧">
+        <a class="game-card hatsumode-card" href="hatsumode/">
+          <span>初詣ゲーム</span>
+          <small>お寺の初詣の手順を当てよう</small>
+        </a>
+        <a class="game-card koden-card" href="koden/">
+          <span>お香典選択ゲーム</span>
+          <small>三種類のお香典から一つ選ぶ</small>
+        </a>
+        <a class="game-card oshoko-card" href="oshoko/">
+          <span>お焼香ゲーム</span>
+          <small>焼香を三回、顔へ寄せて戻す</small>
+        </a>
       </section>
 
-      <section class="slots" id="slots" aria-label="作法を入れる枠"></section>
-
-      <section class="tray" aria-label="作法パネル">
-        <div class="panel-grid" id="panelGrid"></div>
-      </section>
-
-      <button class="decide-button" id="decideButton" type="button" disabled>決定</button>
-
-      <section class="result" id="result" hidden>
-        <h2 id="resultTitle">答え合わせ</h2>
-        <p id="resultText"></p>
-        <p class="answer-line">正解: お賽銭 → 鈴を鳴らす → 合掌 → 礼</p>
-        <button id="playAgainButton" type="button">もう一度</button>
-      </section>
+      <section class="url-list" aria-label="公開URL">
+        <h2>QRコード用URL</h2>
+        <p>初詣: <code>https://523seitaro-a11y.github.io/BuddhismGame/hatsumode/</code></p>
+        <p>お香典: <code>https://523seitaro-a11y.github.io/BuddhismGame/koden/</code></p>
+        <p>お焼香: <code>https://523seitaro-a11y.github.io/BuddhismGame/oshoko/</code></p>
       </section>
     </main>
-
-    <script src="app.js?v=20260523-06"></script>
   </body>
 </html>
