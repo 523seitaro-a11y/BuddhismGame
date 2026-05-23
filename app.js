@@ -23,7 +23,6 @@ const gameScreen = document.querySelector("#gameScreen");
 const startButton = document.querySelector("#startButton");
 const slots = document.querySelector("#slots");
 const panelGrid = document.querySelector("#panelGrid");
-const message = document.querySelector("#message");
 const result = document.querySelector("#result");
 const resultTitle = document.querySelector("#resultTitle");
 const resultText = document.querySelector("#resultText");
@@ -84,16 +83,15 @@ function render() {
   result.hidden = true;
   decideButton.disabled = true;
   decideButton.textContent = "決定";
-  message.textContent = "お寺の初詣です。パネルを左から右へ並べ、決定を押そう。";
   clearAction();
   updateDecideState();
 }
 
 function selectPanel(id) {
   if (checking) return;
-  selectedPanelId = id;
+  selectedPanelId = selectedPanelId === id ? null : id;
   document.querySelectorAll(".action-panel").forEach((panel) => {
-    panel.classList.toggle("selected", panel.dataset.id === id);
+    panel.classList.toggle("selected", panel.dataset.id === selectedPanelId);
   });
 }
 
@@ -122,7 +120,6 @@ function placePanel(id, index) {
   panel.disabled = true;
   panel.classList.remove("selected");
   selectedPanelId = null;
-  message.textContent = `${step.label}を${index + 1}番に入れました。全部入れたら決定を押してください。`;
   updateDecideState();
 }
 
@@ -162,7 +159,7 @@ function wait(ms) {
 async function playAction(id) {
   clearAction();
   const step = allPanels.find((item) => item.id === id);
-  message.textContent = actionMessages[id] || `${step.label}をします。`;
+  resultText.textContent = actionMessages[id] || `${step.label}をします。`;
   person.classList.add(`act-${id}`);
   if (id === "coin") {
     coin.classList.remove("animate");
@@ -189,9 +186,6 @@ function showAnswer() {
   resultText.textContent = isCorrect
     ? "お寺の初詣の流れを正しく並べられました。"
     : "正しい順番を確認しましょう。お寺では拍手ではなく、合掌して祈願します。";
-  message.textContent = isCorrect
-    ? "参拝完了。静かに新しい一年を始めましょう。"
-    : "正解は、お賽銭 → 鈴を鳴らす → 合掌 → 礼 です。";
   result.hidden = false;
 }
 
