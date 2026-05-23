@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>お焼香ゲーム</title>
-    <link rel="stylesheet" href="styles.css?v=20260523-oshoko03">
+    <link rel="stylesheet" href="styles.css?v=20260523-oshoko04">
   </head>
   <body>
     <main class="game">
       <section class="title" id="title">
         <h1>お焼香ゲーム</h1>
-        <p>焼香箱の左側の灰を顔に近づけて、元の場所へ戻す動きを三回しよう。</p>
+        <p>箱の右側の灰を顔に近づけて、焼香箱の左側へ戻す動きを三回しよう。</p>
         <button id="startButton" type="button">スタート</button>
       </section>
 
@@ -24,7 +24,7 @@
           <div class="scene-stage" id="sceneStage">
             <img class="scene-base" src="assets/oshoko.png" alt="上から見たお焼香と顔">
             <div class="target-zone face-zone" aria-hidden="true"></div>
-            <div class="target-zone start-zone" aria-hidden="true"></div>
+            <div class="target-zone return-zone" aria-hidden="true"></div>
             <img class="ash" id="ash" src="assets/ash.png" alt="灰">
           </div>
         </section>
@@ -39,6 +39,6 @@
         </section>
       </section>
     </main>
-    <script src="app.js?v=20260523-oshoko03"></script>
+    <script src="app.js?v=20260523-oshoko04"></script>
   </body>
 </html>

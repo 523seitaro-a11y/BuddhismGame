@@ -5,7 +5,7 @@ const resetButton = document.querySelector("#resetButton");
 const ash = document.querySelector("#ash");
 const sceneStage = document.querySelector("#sceneStage");
 const faceZone = document.querySelector(".face-zone");
-const startZone = document.querySelector(".start-zone");
+const returnZone = document.querySelector(".return-zone");
 const count = document.querySelector("#count");
 const result = document.querySelector("#result");
 
@@ -22,13 +22,13 @@ function reset() {
   count.textContent = "0";
   result.hidden = true;
   ash.hidden = false;
-  ash.classList.remove("dragging", "near-face", "near-start");
+  ash.classList.remove("dragging", "near-face", "near-return");
   resetAshPosition();
 }
 
 function resetAshPosition() {
-  ash.style.left = "42%";
-  ash.style.top = "23%";
+  ash.style.left = "74%";
+  ash.style.top = "15%";
 }
 
 function overlaps(first, second) {
@@ -41,21 +41,21 @@ function overlaps(first, second) {
 
 function updateZones() {
   const nearFace = overlaps(ash, faceZone);
-  const nearStart = overlaps(ash, startZone);
+  const nearReturn = overlaps(ash, returnZone);
   ash.classList.toggle("near-face", nearFace);
-  ash.classList.toggle("near-start", nearStart && visitedFace);
+  ash.classList.toggle("near-return", nearReturn && visitedFace);
   if (nearFace) visitedFace = true;
-  return { nearStart };
+  return { nearReturn };
 }
 
 function finishCycleIfReady() {
-  const { nearStart } = updateZones();
-  if (!visitedFace || !nearStart) return false;
+  const { nearReturn } = updateZones();
+  if (!visitedFace || !nearReturn) return false;
   current += 1;
   count.textContent = String(current);
   visitedFace = false;
   resetAshPosition();
-  ash.classList.remove("near-face", "near-start");
+  ash.classList.remove("near-face", "near-return");
   if (current >= 3) {
     result.hidden = false;
     ash.hidden = true;
