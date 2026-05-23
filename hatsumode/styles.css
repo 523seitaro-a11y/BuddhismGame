@@ -116,6 +116,11 @@ button {
   gap: 12px;
 }
 
+.topbar h1 {
+  font-size: clamp(1.05rem, 5.6vw, 1.85rem);
+  line-height: 1.12;
+}
+
 h1,
 h2,
 p {
@@ -161,57 +166,63 @@ h1 {
   background: rgba(104, 66, 37, 0.22);
 }
 
-.temple-sign {
+.bell-stand {
   position: absolute;
   left: 50%;
-  top: 8px;
+  top: 10px;
+  width: 72px;
+  height: 96px;
   transform: translateX(-50%);
-  padding: 3px 10px;
-  border: 2px solid var(--wood-dark);
-  border-radius: 999px;
-  background: #fff6da;
-  color: var(--wood-dark);
-  font-size: 0.78rem;
-  font-weight: 900;
-  z-index: 2;
 }
 
-.temple-gate {
-  position: absolute;
-  left: 50%;
-  bottom: 42px;
-  width: 148px;
-  height: 50px;
-  transform: translateX(-50%);
-  border-top: 10px solid var(--wood-dark);
-}
-
-.temple-gate::before,
-.temple-gate::after {
+.bell-stand::before {
   content: "";
   position: absolute;
+  left: 50%;
   top: 0;
-  width: 12px;
-  height: 50px;
+  width: 64px;
+  height: 8px;
+  transform: translateX(-50%);
+  border: 3px solid #111111;
+  border-radius: 8px;
   background: var(--wood);
 }
 
-.temple-gate::before {
-  left: 20px;
-}
-
-.temple-gate::after {
-  right: 20px;
-}
-
-.temple-gate span {
+.rope {
   position: absolute;
-  left: 44px;
-  right: 44px;
-  top: 10px;
-  height: 24px;
-  border-radius: 4px 4px 0 0;
-  background: rgba(104, 66, 37, 0.26);
+  left: 50%;
+  top: 11px;
+  width: 8px;
+  height: 72px;
+  transform: translateX(-50%);
+  border: 2px solid #111111;
+  border-radius: 999px;
+  background: var(--red);
+}
+
+.bell {
+  position: absolute;
+  left: 50%;
+  top: 22px;
+  width: 44px;
+  height: 34px;
+  transform: translateX(-50%);
+  border: 3px solid #111111;
+  border-radius: 18px 18px 8px 8px;
+  background: var(--yellow);
+}
+
+.bell::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 12px;
+  height: 12px;
+  transform: translateX(-50%);
+  border: 3px solid #111111;
+  border-radius: 50%;
+  background: var(--orange);
 }
 
 .person {
@@ -663,7 +674,6 @@ h1 {
     height: 92px;
   }
 
-  .temple-sign,
   .action-panel small {
     display: none;
   }
