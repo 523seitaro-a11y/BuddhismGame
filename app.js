@@ -103,23 +103,11 @@ function placePanel(id, index) {
 
   if (!panel || !slot || !step) return;
 
-  const previous = placed[index];
-  if (previous) {
-    document.querySelector(`.action-panel[data-id="${previous}"]`).disabled = false;
-  }
-
-  const oldIndex = placed.indexOf(id);
-  if (oldIndex >= 0) {
-    placed[oldIndex] = null;
-    resetSlot(oldIndex);
-  }
-
   placed[index] = id;
   slot.classList.add("filled");
   slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">${step.label}</span>`;
-  panel.disabled = true;
-  panel.classList.remove("selected");
-  selectedPanelId = null;
+  panel.classList.add("selected");
+  selectedPanelId = id;
   updateDecideState();
 }
 
