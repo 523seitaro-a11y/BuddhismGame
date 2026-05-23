@@ -72,7 +72,7 @@ h1 {
 
 .play {
   display: grid;
-  gap: 14px;
+  gap: 18px;
 }
 
 .play[hidden],
@@ -98,71 +98,46 @@ header h1 {
   background: var(--white);
 }
 
-.altar {
-  height: 190px;
-  position: relative;
-  overflow: hidden;
-  border: 3px solid var(--ink);
-  border-radius: 10px;
-  background: #e9f7ff;
-}
-
-.table {
-  position: absolute;
-  left: 18%;
-  right: 18%;
-  bottom: 32px;
-  height: 70px;
-  border: 3px solid var(--ink);
-  border-radius: 8px;
-  background: var(--green);
-}
-
-.incense {
-  position: absolute;
-  left: 50%;
-  bottom: 88px;
-  width: 62px;
-  height: 20px;
-  transform: translateX(-50%);
-  border: 3px solid var(--ink);
-  border-radius: 999px;
-  background: var(--yellow);
-}
-
-.flower {
-  position: absolute;
-  bottom: 92px;
-  width: 32px;
-  height: 56px;
-  border-radius: 999px 999px 8px 8px;
-  border: 3px solid var(--ink);
-  background: var(--red);
-}
-
-.flower.left {
-  left: 22%;
-}
-
-.flower.right {
-  right: 22%;
-}
-
 .choices {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
 .choice {
-  min-height: 72px;
-  padding: 12px;
-  text-align: left;
+  min-height: 190px;
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  padding: 10px 8px;
+  text-align: center;
   background: var(--white);
+}
+
+.choice img {
+  display: block;
+  width: min(100%, 98px);
+  height: auto;
+}
+
+.choice span {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+  font-weight: 900;
 }
 
 .choice.selected {
   background: var(--blue);
   color: var(--white);
+}
+
+.choice:disabled:not(.selected) {
+  opacity: 0.5;
 }
 
 .result {
@@ -172,4 +147,21 @@ header h1 {
   border: 3px solid var(--ink);
   border-radius: 10px;
   background: var(--yellow);
+}
+
+.result p {
+  font-size: clamp(2.2rem, 14vw, 4rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+@media (max-width: 420px) {
+  .choice {
+    min-height: 158px;
+    padding: 8px 5px;
+  }
+
+  .choice img {
+    width: min(100%, 78px);
+  }
 }
