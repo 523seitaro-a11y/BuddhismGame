@@ -55,7 +55,6 @@ h1 {
 }
 
 #startButton,
-#resetButton,
 .choice {
   border: 3px solid var(--ink);
   border-radius: 10px;
@@ -93,9 +92,15 @@ header h1 {
 }
 
 #resetButton {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #d8cdbb;
+  border-radius: 8px;
   background: var(--white);
+  color: var(--ink);
+  font-size: 1.3rem;
+  font-weight: 800;
+  box-shadow: none;
 }
 
 .choices {
@@ -134,7 +139,6 @@ header h1 {
 
 .choice.selected {
   background: transparent;
-  transform: translateY(-6px);
 }
 
 .choice.selected img {
