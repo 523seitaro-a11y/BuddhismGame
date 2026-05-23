@@ -190,6 +190,7 @@ header h1 {
   border: 3px solid var(--ink);
   border-radius: 10px;
   background: var(--yellow);
+  color: var(--ink);
 }
 
 @media (max-width: 420px) {
