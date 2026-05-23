@@ -453,8 +453,8 @@ h1 {
   height: 22px;
   margin: 0 auto;
   border-radius: 50%;
-  background: #eee4d2;
-  color: var(--wood-dark);
+  background: #111111;
+  color: var(--white);
 }
 
 .slot-text {
@@ -499,12 +499,6 @@ h1 {
 .tray {
   display: grid;
   gap: 5px;
-}
-
-.tray-title {
-  color: var(--muted);
-  font-size: 0.76rem;
-  font-weight: 900;
 }
 
 .panel-grid {
@@ -654,8 +648,7 @@ h1 {
   }
 
   .temple-sign,
-  .action-panel small,
-  .tray-title {
+  .action-panel small {
     display: none;
   }
 
