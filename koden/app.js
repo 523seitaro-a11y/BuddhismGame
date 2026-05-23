@@ -22,7 +22,6 @@ function render() {
     button.setAttribute("aria-label", `${index + 1}番の御香典を選ぶ`);
     button.innerHTML = `
       <img src="assets/gokoden.png" alt="" aria-hidden="true">
-      <span>${index + 1}</span>
     `;
     button.addEventListener("click", () => choose(button));
     choiceList.append(button);
