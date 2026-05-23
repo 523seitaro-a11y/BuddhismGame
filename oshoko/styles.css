@@ -139,12 +139,14 @@ header h1 {
 }
 
 .ash.near-face {
-  outline: 3px solid var(--green);
+  outline: 4px solid var(--green);
+  outline-offset: 8px;
   border-radius: 50%;
 }
 
 .ash.near-return {
-  outline: 3px solid var(--blue);
+  outline: 4px solid var(--blue);
+  outline-offset: 8px;
   border-radius: 50%;
 }
 
