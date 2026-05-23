@@ -30,13 +30,9 @@ function makePanel(step) {
   const button = document.createElement("button");
   button.className = "action-panel";
   button.type = "button";
-  button.draggable = true;
+  button.draggable = false;
   button.dataset.id = step.id;
   button.innerHTML = `<span>${step.label}</span><small>${step.detail}</small>`;
-  button.addEventListener("dragstart", (event) => {
-    event.dataTransfer.setData("text/plain", step.id);
-    selectedPanelId = step.id;
-  });
   button.addEventListener("pointerdown", (event) => beginPointerDrag(event, button, step.id));
   button.addEventListener("click", () => {
     if (suppressNextClick) {
@@ -49,13 +45,16 @@ function makePanel(step) {
 }
 
 function beginPointerDrag(event, panel, id) {
-  if (panel.disabled || event.pointerType === "mouse") return;
+  if (panel.disabled) return;
+
+  event.preventDefault();
 
   const startX = event.clientX;
   const startY = event.clientY;
   let dragging = false;
 
   selectedPanelId = id;
+  panel.classList.add("pressed");
   panel.setPointerCapture(event.pointerId);
 
   function move(moveEvent) {
@@ -77,7 +76,12 @@ function beginPointerDrag(event, panel, id) {
     panel.removeEventListener("pointerup", end);
     panel.removeEventListener("pointercancel", cancel);
 
-    if (!dragging) return;
+    panel.classList.remove("pressed");
+
+    if (!dragging) {
+      selectPanel(id);
+      return;
+    }
 
     suppressNextClick = true;
     panel.classList.remove("dragging");
@@ -92,6 +96,7 @@ function beginPointerDrag(event, panel, id) {
   }
 
   function cancel() {
+    panel.classList.remove("pressed");
     panel.classList.remove("dragging");
     panel.style.transform = "";
     panel.removeEventListener("pointermove", move);

@@ -446,6 +446,11 @@ h1 {
   box-shadow: 0 0 0 3px rgba(182, 64, 54, 0.16);
 }
 
+.action-panel.pressed {
+  border-color: rgba(182, 64, 54, 0.6);
+  background: #fff7f3;
+}
+
 .action-panel.dragging {
   position: relative;
   z-index: 10;
