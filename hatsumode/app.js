@@ -29,8 +29,16 @@ const resultText = document.querySelector("#resultText");
 const resetButton = document.querySelector("#resetButton");
 const playAgainButton = document.querySelector("#playAgainButton");
 const decideButton = document.querySelector("#decideButton");
-const coin = document.querySelector("#coin");
-const person = document.querySelector("#person");
+const sceneImage = document.querySelector("#sceneImage");
+
+const sceneImages = {
+  default: "assets/default.png",
+  coin: "assets/coin.png",
+  bell: "assets/bell.png",
+  gassho: "assets/gassho.png",
+  bow: "assets/bow.png",
+  clap: "assets/clap.png",
+};
 
 let placed = [];
 let selectedPanelId = null;
@@ -154,19 +162,14 @@ async function playAction(id) {
   clearAction();
   const step = allPanels.find((item) => item.id === id);
   resultText.textContent = actionMessages[id] || `${step.label}をします。`;
-  person.classList.add(`act-${id}`);
-  if (id === "coin") {
-    coin.classList.remove("animate");
-    window.requestAnimationFrame(() => coin.classList.add("animate"));
-  }
+  sceneImage.src = sceneImages[id] || sceneImages.default;
   await wait(850);
   clearAction();
   await wait(120);
 }
 
 function clearAction() {
-  person.className = "person";
-  coin.classList.remove("animate");
+  sceneImage.src = sceneImages.default;
 }
 
 function showAnswer() {
