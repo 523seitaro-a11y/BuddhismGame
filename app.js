@@ -65,6 +65,12 @@ function makeSlot(index) {
   slot.dataset.index = String(index);
   slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">空き</span>`;
   slot.addEventListener("click", () => {
+    if (placed[index]) {
+      placed[index] = null;
+      resetSlot(index);
+      updateDecideState();
+      return;
+    }
     if (selectedPanelId) placePanel(selectedPanelId, index);
   });
   return slot;
