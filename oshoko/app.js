@@ -27,8 +27,8 @@ function reset() {
 }
 
 function resetAshPosition() {
-  ash.style.left = "70%";
-  ash.style.top = "15%";
+  ash.style.left = "42%";
+  ash.style.top = "23%";
 }
 
 function overlaps(first, second) {
