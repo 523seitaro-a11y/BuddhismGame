@@ -38,6 +38,7 @@ let placed = [];
 let selectedPanelId = null;
 let suppressNextClick = false;
 let checking = false;
+let activeDropSlot = null;
 
 function shuffle(items) {
   return [...items].sort(() => Math.random() - 0.5);
@@ -84,6 +85,7 @@ function beginPointerDrag(event, panel, id) {
     if (dragging) {
       moveEvent.preventDefault();
       panel.style.transform = `translate(${dx}px, ${dy}px) scale(1.03)`;
+      updateDropTarget(moveEvent.clientX, moveEvent.clientY);
     }
   }
 
@@ -104,7 +106,8 @@ function beginPointerDrag(event, panel, id) {
     panel.classList.remove("dragging");
     panel.style.transform = "";
 
-    const dropTarget = document.elementFromPoint(endEvent.clientX, endEvent.clientY)?.closest(".slot");
+    const dropTarget = getDropSlot(endEvent.clientX, endEvent.clientY);
+    clearDropTarget();
     if (dropTarget) {
       placePanel(id, Number(dropTarget.dataset.index));
     } else {
@@ -116,6 +119,7 @@ function beginPointerDrag(event, panel, id) {
     panel.classList.remove("pressed");
     panel.classList.remove("dragging");
     panel.style.transform = "";
+    clearDropTarget();
     panel.removeEventListener("pointermove", move);
     panel.removeEventListener("pointerup", end);
     panel.removeEventListener("pointercancel", cancel);
@@ -124,6 +128,27 @@ function beginPointerDrag(event, panel, id) {
   panel.addEventListener("pointermove", move);
   panel.addEventListener("pointerup", end);
   panel.addEventListener("pointercancel", cancel);
+}
+
+function getDropSlot(x, y) {
+  return document.elementFromPoint(x, y)?.closest(".slot:not(.filled)");
+}
+
+function updateDropTarget(x, y) {
+  const nextSlot = getDropSlot(x, y);
+  if (nextSlot === activeDropSlot) return;
+  clearDropTarget();
+  activeDropSlot = nextSlot;
+  if (activeDropSlot) {
+    activeDropSlot.classList.add("drop-ready");
+  }
+}
+
+function clearDropTarget() {
+  if (activeDropSlot) {
+    activeDropSlot.classList.remove("drop-ready");
+    activeDropSlot = null;
+  }
 }
 
 function makeSlot(index) {
@@ -197,7 +222,7 @@ function placePanel(id, index) {
 
 function resetSlot(index) {
   const slot = document.querySelector(`.slot[data-index="${index}"]`);
-  slot.classList.remove("filled", "right", "wrong");
+  slot.classList.remove("filled", "right", "wrong", "drop-ready");
   slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">空き</span>`;
 }
 
