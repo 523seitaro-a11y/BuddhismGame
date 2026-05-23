@@ -24,7 +24,6 @@ const startButton = document.querySelector("#startButton");
 const slots = document.querySelector("#slots");
 const panelGrid = document.querySelector("#panelGrid");
 const message = document.querySelector("#message");
-const progressBar = document.querySelector("#progressBar");
 const result = document.querySelector("#result");
 const resultTitle = document.querySelector("#resultTitle");
 const resultText = document.querySelector("#resultText");
@@ -87,7 +86,7 @@ function render() {
   decideButton.textContent = "決定";
   message.textContent = "お寺の初詣です。パネルを左から右へ並べ、決定を押そう。";
   clearAction();
-  updateProgress();
+  updateDecideState();
 }
 
 function selectPanel(id) {
@@ -96,8 +95,6 @@ function selectPanel(id) {
   document.querySelectorAll(".action-panel").forEach((panel) => {
     panel.classList.toggle("selected", panel.dataset.id === id);
   });
-  const step = allPanels.find((item) => item.id === id);
-  message.textContent = `「${step.label}」を選択中。入れたい枠をタップしてください。`;
 }
 
 function placePanel(id, index) {
@@ -126,7 +123,7 @@ function placePanel(id, index) {
   panel.classList.remove("selected");
   selectedPanelId = null;
   message.textContent = `${step.label}を${index + 1}番に入れました。全部入れたら決定を押してください。`;
-  updateProgress();
+  updateDecideState();
 }
 
 function resetSlot(index) {
@@ -135,9 +132,8 @@ function resetSlot(index) {
   slot.innerHTML = `<span class="slot-number">${index + 1}</span><span class="slot-text">空き</span>`;
 }
 
-function updateProgress() {
+function updateDecideState() {
   const count = placed.filter(Boolean).length;
-  progressBar.style.width = `${(count / correctOrder.length) * 100}%`;
   decideButton.disabled = count !== correctOrder.length || checking;
 }
 
